@@ -1,0 +1,218 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title> Yenzah Ajuda </title>
+    <link rel="icon" type="image/png" href="{% static "img/favicon.png" %}">
+    <link rel="stylesheet" href="{% static "css/bootstrap.min.css"%}">
+    <link rel="stylesheet" type="text/css" href="{% static "css/style.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "css/signin.css" %}">
+    <script type="text/javascript" src="{% static "js/jquery-2.1.4.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/bootstrap.min.js" %}"></script>
+
+  </head>
+  <body>
+    <div class="container">
+      <nav class="navbar navbar-default cor_de_fundo navbar-fixed-top">
+        <div class="container-fluid">
+          <div class="navbar-inner">
+                <div class="navbar-brand dropdown" id="menu_topo">
+                  <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="menu1">Menu <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a tabindex="-1" href="{% url 'home' %}">Página Inicial</a></li>
+                    <li role="separator" class="divider"></li>
+                    {% if usuario.groups.first.name == 'representante' %}
+                    <li><a tabindex="-1" href="/manual/material">MKT/Material Comercial</a></li>
+
+		                <li role="separator" class="divider"></li>
+                    <li><a tabindex="-1" href="{% url 'chamado_anonimo' %}">Fale com o Presidente</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a tabindex="-1" href="{% url 'alterar_senha' %}">Alterar Senha</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a tabindex="-1" href="{% url 'esqueci_email' %}">Alterar E-mail</a></li>
+
+
+                    {% elif usuario.groups.first.name == 'inspiradora' %}
+                    <li><a tabindex="-1" href="/loja">Loja</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a tabindex="-1" href="/manual/material">MKT/Material Comercial</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a tabindex="-1" href="/manual/gente_e_gestao">Gente e Gestão</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a tabindex="-1" href="/manual/faq">FAQ</a></li>
+                    <li role="separator" class="divider"></li>
+                 	<li class="dropdown-submenu">
+		                <a tabindex="-1" href="#">Sistema de Chamados</a>
+		                <ul class="dropdown-menu">
+		                    <li><a href="{% url 'listar_chamado_dp' %}">Chamados de DP</a></li>
+		                    <li><a href="{% url 'listar_chamado_mkt' %}">Chamados de Desginer</a></li>
+		                </ul>
+	                </li>
+	                <li role="separator" class="divider"></li>
+                    <li><a tabindex="-1" href="{% url 'chamado_anonimo' %}">Fale com o Presidente</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a tabindex="-1" href="{% url 'alterar_senha' %}">Alterar Senha</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a tabindex="-1" href="{% url 'esqueci_email' %}">Alterar E-mail</a></li>
+                    <li role="separator" class="divider"></li>
+                    {% else %}
+	                    <li><a tabindex="-1" href="/manual">Manuais e Procedimentos</a></li>
+	                    <li role="separator" class="divider"></li>
+	                    <li><a tabindex="-1" href="/manual/material">MKT/Material Comercial</a></li>
+                      <li role="separator" class="divider"></li>
+                      <li><a tabindex="-1" href="/manual/gente_e_gestao"> Gente e Gestão </a></li>
+	                    <li role="separator" class="divider"></li>
+                      <li><a tabindex="-1" href="/loja/cadastrar">Loja</a></li>
+                      <li role="separator" class="divider"></li>
+                      <li><a tabindex="-1" href="/manual/faq"> FAQ </a></li>
+                      <li role="separator" class="divider"></li>
+	                    <li class="dropdown-submenu">
+			                <a tabindex="-1" href="#">Sistema de Chamados</a>
+			                <ul class="dropdown-menu">
+			                    <li><a href="{% url 'listar_chamado_ti' %}">Chamados de TI</a></li>
+			                    <li><a href="{% url 'listar_chamado_dp' %}">Chamados de DP</a></li>
+	                        	<li><a href="{% url 'listar_chamado_mkt' %}">Chamados de Desginer</a></li>
+			                </ul>
+		                </li>
+	                    <li role="separator" class="divider"></li>
+	                    <li><a tabindex="-1" href="{% url 'chamado_anonimo' %}">Fale com o Presidente</a></li>
+	                    <li role="separator" class="divider"></li>
+	                    <li><a tabindex="-1" href="{% url 'alterar_senha' %}">Alterar Senha</a></li>
+	                    <li role="separator" class="divider"></li>
+	                    <li><a tabindex="-1" href="{% url 'esqueci_email' %}">Alterar E-mail</a></li>
+	                 {% endif %}
+
+
+                  </ul>
+                </div>
+              <div class="navbar-brand brand2" style="">
+                <a href="{% url 'home' %}"><img src="{% static "img/novalogo80.png" %}"></a>
+              </div>
+              <div class=" navbar-text pull-right">
+
+                {% if not user.is_anonymous  %}
+                  {{usuario.first_name}}
+                  |
+                  <a href="{% url 'auth:logout' %}?next={{ request.path }}">Sair</a>
+                {% else %}
+                  <a href="{% url 'home'%}">Login</a>
+                {% endif %}
+              </div>
+
+          </div>
+        </div>
+        </nav>
+
+    </div>
+    </br>
+    </br>
+
+
+    {% block corpo %}
+
+    {% endblock corpo %}
+      <script type="text/javascript">
+      $(document).ready(function() {
+    	  var tamanho_tela = $(window).width();
+    	  if (tamanho_tela < 600) {
+    		  var menu = $('#menu_topo');
+    		  menu.children().remove();
+			    menu.append("<a href=>Menu</a>");
+			    menu.children().attr('href','/accounts/login');
+    	  }
+      });
+
+         $('.dropdown-submenu').hover(function(){
+            var val=$(this).children('.dropdown-menu').css('display');
+
+            if(val == 'block') {
+              $(this).find('.dropdown-menu').css('display','none');
+            }
+            else {
+              $(this).parent().find('.dropdown-menu').css('display','none');
+              $(this).children('.dropdown-menu').css('display','block');
+
+              //If not enough space in left, display the submenu in ... right
+              var primeiromenu =$(this).parent()
+              var menu=$(this).parent().find("ul");
+              var menupos=menu.offset();
+
+              if ((menupos.left + menu.width()) + 30 > $(window).width()) {
+            	  var newpos = - menu.width();
+            	  menu.css({left:newpos});
+
+              }
+              else {
+                var newpos=$(this).parent().width();
+                menu.css({left:newpos});
+              }
+
+            }
+
+            return false;
+        });
+        //  $('.dropdown-submenu').click(function(){
+        //      var val=$(this).children('.dropdown-menu').css('display');
+         //
+        //      if(val == 'block') {
+        //        $(this).find('.dropdown-menu').css('display','none');
+        //      }
+        //      else {
+        //        $(this).parent().find('.dropdown-menu').css('display','none');
+        //        $(this).children('.dropdown-menu').css('display','block');
+         //
+        //        //If not enough space in left, display the submenu in ... right
+        //        var primeiromenu =$(this).parent()
+        //        var menu=$(this).parent().find("ul");
+        //        var menupos=menu.offset();
+         //
+        //        if ((menupos.left + menu.width()) + 30 > $(window).width()) {
+        //      	  var newpos = - menu.width();
+        //      	  menu.css({left:newpos});
+         //
+        //        }
+        //        else {
+        //          var newpos=$(this).parent().width();
+        //          menu.css({left:newpos});
+        //        }
+         //
+        //      }
+         //
+        //      return false;
+        //  });
+/*           $('ul.dropdown-menu [data-toggle=dropdown]').on('click', function(event) {
+        	    // Avoid following the href location when clicking
+        	    event.preventDefault();
+        	    // Avoid having the menu to close when clicking
+        	    event.stopPropagation();
+        	    // If a menu is already open we close it
+        	    //$('ul.dropdown-menu [data-toggle=dropdown]').parent().removeClass('open');
+        	    // opening the one you clicked on
+        	    $(this).parent().addClass('open');
+
+        	    var menu = $(this).parent().find("ul");
+        	    var menupos = menu.offset();
+
+        	    if ((menupos.left + menu.width()) + 30 > $(window).width()) {
+        	        var newpos = - menu.width();
+        	    } else {
+        	        var newpos = $(this).parent().width();
+        	    }
+        	    menu.css({ left:newpos });
+
+        	}); */
+
+      {% block javascript %}
+      {% endblock javascript %}
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    	  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+       ga('create', 'UA-78009215-1', 'auto');
+       ga('send', 'pageview');
+    </script>
+  </body>
+ </html>

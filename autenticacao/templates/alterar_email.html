@@ -1,0 +1,24 @@
+{% extends "init.html" %}
+{% block corpo %}
+<form class="form-signin" role="form" action="{% url "esqueci_email" %}" 
+method="POST">
+	{% csrf_token %}
+	<h2 class="form-signin-heading">Alterar o E-mail</h2>
+    <input type="text" id="email" name="email" class="form-control" placeholder="Email" required autofocus>
+	<button type="submit" class="btn btn-lg btn-primary btn-block">Alterar</button>
+	<input type="hidden" name="next" value="{{ next }}" />
+    {% if erro %}
+        <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                &times;
+            </button>
+            Não foi possível inserir esse email.
+        </div>
+    {% endif %}
+    {% if alterado %}
+        <div class="alert alert-success">
+            Seu e-mail foi inserido
+    {% endif %}
+</form>
+{% endblock corpo %}
+	

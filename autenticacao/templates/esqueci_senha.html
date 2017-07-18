@@ -1,0 +1,28 @@
+{% extends "init.html" %}
+{% block corpo %}
+{# <div class="col-md-4"> #}
+	<form class="form-signin" role="form" action="{% url "esqueci_senha" %}" 
+	method="POST">
+		{% csrf_token %}
+		<h2 class="form-signin-heading">Perdi a Senha :(</h2>
+		<input type="text" id="id_email" name="email" class="form-control" placeholder="Email" required autofocus>
+		<button type="submit" class="btn btn-lg btn-primary btn-block">Enviar</button>
+		<input type="hidden" name="next" value="{{ next }}" />
+		{% if erro %}
+            <div class="alert alert-danger">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                    &times;
+                </button>
+                Por favor, verifique o Email informado.
+            </div>
+        {% endif %}
+        {% if enviado %}
+        	<div class="alert alert-success">
+        		Foi enviada uma senha para o e-mail.
+        	</div>
+        {% endif %}
+	</form>
+
+{# </div> #}
+{% endblock corpo %}
+	

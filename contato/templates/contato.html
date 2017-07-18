@@ -1,0 +1,58 @@
+{% extends "init.html" %}
+{% load staticfiles %}
+{% block corpo %}
+
+  <br />
+  {% for tipo in tipos %}
+    <div class="col-md-12">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <h3> {{tipo.nome}}</h3>
+        <table border="1" class="table table-bordered tabelas_contato">
+           <thead>
+              <tr>
+                <th>Nome</th>
+                <th>E-mail</th>
+                <th>Telefone</th>
+                {% if tipo.nome == 'Escritório' %}
+                  <th>Departamento</th>
+
+                {% else %}
+                  <th>Região</th>
+                {% endif %}
+              </tr>
+       </thead>
+      <tbody>
+      {% for contato in contatos %}
+        {% if contato.tipo_contato_id == tipo.id %}        
+            <tr>
+              <td>{{contato.nome}}</td>
+              <td>{{contato.email}}</td>
+              <td>{{contato.telefone}}</td>
+              {% if tipo.nome == 'Escritório' %}
+                <td>{{contato.departamento}}</td>  
+              {% else %}
+                <td>{{contato.regiao}}</td>
+              {% endif %}
+            </tr>
+          {% endif %}
+          {% endfor %}
+          </tbody>
+          </table>
+         </div>
+        </div>
+  {% endfor %}
+   <div class="col-md-2"></div>
+   <script type="text/javascript"></script>
+{% endblock corpo %}
+
+{% block javascript %}
+  var tabelas = $('.tabelas_contato');
+  for(i=0; i < tabelas.length; i++){ 
+    if(tabelas.find('tbody').length){
+      console.log('vazias ' + i);
+      }else{
+       console.log('Cheia' + i);
+      }
+  }
+{% endblock javascript %}

@@ -1,0 +1,83 @@
+{% extends 'init.html' %}
+
+{% block corpo %}
+
+
+
+    <div id='main-menu' class="col-md-4">
+      <div class="sidebar-nav well">
+        <ul class="nav nav-list">
+
+          {% if usuario.groups.first.name == 'representante' %}
+          	<li><a href="{% url 'home' %}">Página Inicial</a></li>
+          	<li><a href="/manual/material">MKT/Material Comercial</a></li>
+            <li><a href="/manual/gente_e_gestao">Gente e Gestão</a></li>
+            <li><a tabindex="-1" href="/loja/cadastrar">Loja</a></li>
+		 	      <li><a href="/chamados/anonimo">Fale com o Presidente</a></li>
+
+          	<li><a href="{% url 'alterar_senha' %}">Alterar Senha</a></li>
+          	<li><a href="{% url 'esqueci_email' %}">Alterar E-mail</a></li>
+            <li><a href="{% url 'listar_chamado_n_conformidade' %}">Registro de não conformidade</a></li>
+
+          	<!-- <li><a href="http://www.yenzah.com.br" target="_blank">Acesso ao Site da Yenzah</a></li> -->
+		     {% elif usuario.groups.first.name == 'inspiradora' %}
+          	<li><a href="{% url 'home' %}">Página Inicial</a></li>
+          	<li><a href="/manual/material">MKT/Material Comercial</a></li>
+            <li><a href="/manual/gente_e_gestao">Gente e Gestão</a></li>
+            <li><a tabindex="-1" href="/loja/cadastrar">Loja</a></li>
+            <li><a href="/manual/faq">FAQ</a></li>
+          	<li><a href="{% url 'listar_chamado_dp' %}">Chamados de DP</a></li>
+          	<li><a href="{% url 'alterar_senha' %}">Alterar Senha</a></li>
+          	<li><a href="{% url 'esqueci_email' %}">Alterar E-mail</a></li>
+            <li><a href="{% url 'listar_chamado_n_conformidade' %}">Registro de não conformidade</a></li>
+          	<!-- <li><a href="http://www.yenzah.com.br" target="_blank">Acesso ao Site da Yenzah</a></li> -->
+          {% else %}
+
+
+
+            <li><a href="{% url 'home' %}">Página Inicial</a></li>
+            <li><a href="/manual">Manuais e Procedimentos</a></li>
+            <li><a href="/manual/material">MKT/Material Comercial</a></li>
+            <li><a href="/manual/gente_e_gestao">Gente e Gestão</a></li>
+            <li><a tabindex="-1" href="/loja/cadastrar">Loja</a></li>
+            <li><a href="/manual/faq">FAQ</a></li>
+            <li><a href="{% url 'listar_chamado_ti' %}">Chamados de TI</a></li>
+		        <li><a href="{% url 'listar_chamado_dp' %}">Chamados de DP</a></li>
+            <li><a href="/chamados/anonimo">Fale com o Presidente</a></li>
+            <!-- <li><a href="/contato">Contatos</a></li> -->
+            <li><a href="{% url 'alterar_senha' %}">Alterar Senha</a></li>
+            <li><a href="{% url 'esqueci_email' %}">Alterar E-mail</a></li>
+            <li><a href="{% url 'listar_chamado_n_conformidade' %}">Registro de não conformidade</a></li>
+            <!-- <li><a href="http://187.191.96.191:8080/mge/" target="_blank">Acesso ao Sankhya</a></li> -->
+            <!-- <li><a href="http://www.yenzah.com.br" target="_blank">Acesso ao Site da Yenzah</a></li> -->
+	      {% endif %}
+
+        </ul>
+      </div>
+    </div>
+
+	   <div class="col-md-8">
+      <div>
+	   		<h2>Seja Bem-Vindo à nossa Intranet</h2>
+        <p>O objetivo desse sistema é disponibilizar a você informações essenciais para o seu trabalho. Aqui, teremos: manuais, procedimentos, material de suporte a vendas e o sistema de abertura de chamados de TI e solicitação de arte para o Marketing.</p>
+        <p>Para segurança das suas informações, pedimos que altere a sua senha no primeiro acesso.</p>
+        <p>No menu do lado esquerdo (se estiver usando um computador) você terá acesso a todas funcionalidades do portal.O menu também pode ser acessado na barra superior da página.</p>
+        <p>Nossa intranet é um sistema em evolução. Sendo assim, você pode colaborar conosco com sugestões e reclamações, enviando um e-mail para <a href="mailto:ti@yenzah.com.br">ti@yenzah.com.br</a> , ou abrindo um chamado pela nossa central de chamados.
+        </p>
+
+        <h2>Nosso novo telefone é: (021) 2537-9113</h2>
+      </div>
+      </br>
+	   </div>
+
+     <script type="text/javascript">
+      //  $(document).ready(function() {
+      //   var tamanho_tela = $(window).width();
+      //   if (tamanho_tela > 600) {
+      //     var menu = $('#main-menu');
+      //     menu.children().remove();
+      //   }
+      //  });
+     </script>
+
+{% endblock %}

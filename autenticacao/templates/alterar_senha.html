@@ -1,0 +1,25 @@
+{% extends "init.html" %}
+{% block corpo %}
+<form class="form-signin" role="form" action="{% url "alterar_senha" %}" 
+method="POST">
+	{% csrf_token %}
+	<h2 class="form-signin-heading">Alterar a Senha</h2>
+    <input type="password" id="password_id_new" name="password_new" class="form-control" placeholder="Nova Senha" required autofocus>
+    <input type="password" id="password_id_new_2" name="password_new_2" class="form-control" placeholder="Confirme a Nova Senha">
+	<button type="submit" class="btn btn-lg btn-primary btn-block">Alterar</button>
+	<input type="hidden" name="next" value="{{ next }}" />
+    {% if erro %}
+        <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                &times;
+            </button>
+            As senhas não são iguais.
+        </div>
+    {% endif %}
+    {% if alterado %}
+        <div class="alert alert-success">
+            Sua senha foi alterada.
+    {% endif %}
+</form>
+{% endblock corpo %}
+	
