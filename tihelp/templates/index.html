@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block body %}
+ {% if chamados %}
+ 	<h3> Bem-Vindo </h3>
+	<p><strong>O seu último chamado foi aberto em: </strong>{{chamados.last.data_criacao}}</p>
+	<p><strong>O número dele é :</strong>{{chamados.last.id}}</p>
+	{% if chamados.last.ativar == False %}
+		<p> <strong>Esse chamado ainda é rascunho, faça uma interação para ativar.</strong></p>
+	{% else %}
+		{% if chamados.last.resolvido == True %}
+		<p> <strong>Status:</strong> Resolvido</p>
+		{% else %}
+		<p> <strong>Status:</strong> Aberto</p>
+		{% endif %}
+	{% endif %}
+	{% if chamados.last.status.nome != "Resolvido" %}
+		Faça uma interação, <a href="{% url "interar" chamados.last.id%}">Clique aqui!</a>
+	{% endif %}
+	<br/>
+	<hr />
+	<a href="{% url 'listar' %}" class="btn btn-info" role="button">Lista</a>
+	<a href="{% url 'cadastrar' %}" class="btn btn-info" role="button">Novo</a>
+ {% else %}
+ 	<h3>Chamados de TI</h3>
+ 	<p>Esse é o nosso sistema de chamados de TI. Agora, todas as necessidades de TI deverão ter um chamado associado. Com isso, você e a área de TI poderão acompanhar o status de todas as solicitações e também nós poderemos medir a qualidade do serviço prestado.
+ 	</p>
+ 	<br />
+    <p>Para abrir um chamado, clique em “Abrir Chamado” no Menu à esquerda (para mobile, o menu estará na parte superior).</p>
+    <br />
+ 	<p>Para acompanhar chamados abertos, clique em “Listar Chamados”.</p>
+ {% endif %}
+
+
+{% endblock body %}} 

@@ -1,0 +1,13 @@
+{% extends "init.html" %}
+{% block corpo %}
+	<div class="col-md-12">
+		<form role="form" action="{% url "anonimo" %}" method="POST" class="form-group">
+			{% csrf_token %}
+			<div class="form-group">
+				<label for="descricao">Sua reclamação/sugestão é anônima. Fique à vontade:</label>
+					<textarea id="descricao" name="descricao" cols=70 rows=10 class="form-control"></textarea>
+			</div>
+			<button type="submit" class="save btn btn-default center-block">Salvar</button>
+		</form>
+	</div>
+{% endblock corpo %}

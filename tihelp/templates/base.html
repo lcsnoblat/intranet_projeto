@@ -1,0 +1,18 @@
+{% extends "init.html" %}
+{% load staticfiles %}
+{% block corpo %}
+  <div class="col-md-4">
+      <div class="sidebar-nav well">
+        <ul class="nav nav-list">
+          <li><a href="{% url 'cadastrar' %}">Abrir Chamado</a></li>
+          <li><a href="{% url 'listar' %}">Lista de Chamados</a></li>
+        </ul>
+      </div>
+  </div>
+  <div class="col-md-8">
+    <div class="container-fluid">
+      {% block body%}
+      {% endblock %}
+    </div>
+  </div>
+{% endblock corpo %}
