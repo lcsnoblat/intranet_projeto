@@ -1,0 +1,52 @@
+{% extends "base_chamado.html" %}
+{% block chamado_menu%}
+	<li><a href="{% url url_cadastro %}">Abrir Chamado</a></li>
+	<li><a href="{% url url_listar %}">Listar Chamados</a></li>
+{% endblock chamado_menu%}
+{% block body %}
+	{%if erro %}
+	<div class="alert alert-danger">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+              &times;
+          </button>
+		{{erro}}
+	</div>
+     {%elif msg %}
+      <div class="alert alert-success">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+              &times;
+          </button>
+          {{msg}}
+      </div>
+     {% endif %}
+	<form role="form" action="{% url url_model chamado_id %}" method="POST">
+	{% csrf_token %}
+		<div class="form-group">
+			<label>Descrição:</label>
+			<textarea id="descricao" name="descricao" rows="10" cols="70" class="form-control" required>			
+			</textarea>
+		</div>
+		{% if chamado.resolvido %}
+
+		{% else %}
+			<div class="form-group">
+				<label>Fechar chamado:</label>
+				<input type="checkbox" name="resolvido" id="resolvido" value="False">
+			</div>
+		{% endif %}
+
+		
+		<button type="submit" class="save btn btn-default">Salvar</button>
+		<hr/>
+
+		{% if form.errors %}
+        <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                &times;
+            </button>
+            {{form.non_field_errors}}
+            {{form.errors}}
+        </div>
+    {% endif %}
+	</form>
+{% endblock body%}

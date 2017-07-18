@@ -1,0 +1,124 @@
+{% extends "base_chamado.html" %}
+{% block chamado_menu%}
+	<li><a href="{% url url_cadastrar %}">Abrir Chamado</a></li>
+ 	<li><a href="{% url url_listar %}">Listar Chamados</a></li>
+	<li><a href="{% url url_listar_gestor %}">Área do Gestor</a></li>
+	<li><a href="{% url url_dashboard_geral %}">Dashboard Geral</a></li>
+	<li><a href="{% url url_dashboard_faturamento %}">Dashboard Faturamento</a></li>
+	<li><a href="{% url url_dashboard_pd %}">Dashboard P&D</a></li>
+	<li><a href="{% url url_dashboard_fabrica %}">Dashboard Fábrica</a></li>
+{% endblock chamado_menu%}
+{% block body %}
+{% if model_vazio = 1 %}
+	<h2>Não existem dados o suficiente para gerar estatisticas.</h2>
+{% else %}
+		<br>
+		<h2>DASHBOARD DO GESTOR</h2> <br>
+		<table class="table is-bordered">
+			<thead>
+				<tr>
+					<th></th>
+					<th>Porcentagem</th>
+					<th>Prazo Médio</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Atendimento no Prazo</td>
+					<td>{{ porcentagem_resolvidos_geral }}%</td>
+					<td>{{ media_prazo_geral }} Dias</td>
+				</tr>
+
+				<tr>
+					<td>Atendimento Análise de Procêdencia</td>
+					<td>{{porcentagem_resolvidos_procedencia}}%</td>
+					<td>{{media_prazo_procedencia}} Dias</td>
+				</tr>
+
+				<tr>
+					<td>Atendimento Análise de Causa-Raiz</td>
+					<td>{{porcentagem_resolvidos_causa_raiz}}%</td>
+					<td>{{media_prazo_causa_raiz}} Dias</td>
+				</tr>
+
+				<tr>
+					<td>Atendimento de Tratamento Preliminar</td>
+					<td>{{porcentagem_resolvidos_tratamento}}%</td>
+					<td>{{media_prazo_preliminar}}</td>
+				</tr>
+
+				<tr>
+					<td>Atendimento de Tratamento Definitivo</td>
+					<td>{{porcentagem_resolvidos_definitivo}}%</td>
+					<td>{{media_prazo_definitivo}}</td>
+				</tr>
+
+				
+
+			</tbody>
+		</table>
+	<hr>
+
+			<table class="table is-bordered">
+			<thead>
+				<tr>
+					<th></th>
+					<th>Número Ocorrências</th>
+					<th>% NC Pendentes</th>
+					<th>% Atingimento no Prazo</th>
+					<th>Prazo médio Resolução</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Avaria</td>
+					<td>{{ AvariaCount}}</td>
+					<td> {{Count_abertos_avaria}} %</td>
+					<td>{{Porcentagem_avaria}} %</td>
+					<td>{{ media_prazo_avaria }} Dias</td>
+				</tr>
+
+				<tr>
+					<td>Problema 2</td>
+					<td>{{ Problema2Count}}</td>
+					<td>{{Count_abertos_problema2}} %</td>
+					<td>{{Porcentagem_problema2}} %</td>
+					<td>{{ media_prazo_problema2 }} Dias</td>
+				</tr>
+
+				<tr>
+					<td>Problema 3</td>
+					<td>{{ Problema3Count}}</td>
+					<td>{{Count_abertos_problema3}} %</td>
+					<td>{{Porcentagem_problema3}} %</td>
+					<td>{{ media_prazo_problema3 }} Dias</td>
+				</tr>
+
+				<tr>
+					<td>Problema 4</td>
+					<td>{{ Problema4Count}}</td>
+					<td>{{Count_abertos_problema4}} %</td>
+					<td>{{Porcentagem_problema4}} %</td>
+					<td>{{ media_prazo_problema4 }} Dias</td>
+				</tr>
+
+				<tr>
+					<td>Problema5</td>
+					<td>{{ Problema5Count}}</td>
+					<td>{{Count_abertos_problema5}} %</td>
+					<td>{{Porcentagem_problema5}} %</td>
+					<td>{{ media_prazo_problema5 }} Dias</td>
+				</tr>
+
+				
+
+			</tbody>
+		</table>
+<script type="text/javascript">
+	function alterarEstado(){
+		$('#chamados').removeClass('escondido');
+		$('#botao_estado').addClass('escondido');
+	}
+</script>
+{%endif%}
+{% endblock body %}}

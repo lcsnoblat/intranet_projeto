@@ -1,0 +1,30 @@
+{% extends "base_chamado.html" %}
+{% block chamado_menu%}
+	<li><a href="{% url url_cadastrar %}">Abrir Chamado</a></li>
+ 	<li><a href="{% url url_listar %}">Listar Chamados</a></li>
+{% endblock chamado_menu%}
+{% block body %}
+	<h1>Chamado n° {{chamado.codigo}}</h1>
+	<p><strong>Tipo: </strong>{{chamado.tipo.nome}}</p>
+	<p> <strong>Descrição:</strong> {{chamado.descricao}}</p>
+	<p> <strong>Data de criação:</strong> {{chamado.data_criacao}}</p>
+	<p> <strong>Usuário: </strong> {{chamado.usuario_solicitante.username}}
+	{% if chamado.resolvido == True %}
+	<p> <strong>Status:</strong> Resolvido</p>
+	{% else %}
+	<p> <strong>Status:</strong> Aberto</p>
+	{% endif %}
+{% if lista %}
+	<hr/>
+	{% if lista %}
+		{% for interacao in lista %}
+			<p>Usuário: {{interacao.usuario.username}} </p>
+			<p>Texto: {{interacao.descricao}} </p>
+			<p>Data: {{interacao.data_interacao}} </p>
+			<p>Fase: {{interacao.fase}} </p>
+			<hr/>
+		{% endfor %}
+	{% endif %}
+{% endif %}
+<a class="btn  botao-laranja letra-cor" href="{% url url_interar chamado.codigo %}">Faça uma interacao</a>
+{% endblock body %}}

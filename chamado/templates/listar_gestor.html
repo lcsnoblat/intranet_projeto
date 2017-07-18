@@ -1,0 +1,81 @@
+{% extends "base_chamado.html" %}
+{% block chamado_menu%}
+	<li><a href="{% url url_cadastrar %}">Abrir Chamado</a></li>
+ 	<li><a href="{% url url_listar %}">Listar Chamados</a></li>
+	<li><a href="{% url url_dashboard_geral %}">Dashboard Geral</a></li>
+	<li><a href="{% url url_dashboard_faturamento %}">Dashboard Faturamento</a></li>
+	<li><a href="{% url url_dashboard_pd %}">Dashboard P&D</a></li>
+	<li><a href="{% url url_dashboard_fabrica %}">Dashboard Fábrica</a></li>
+{% endblock chamado_menu%}
+{% block body %}
+{% if lista_solicitante %}
+		<br>
+		<p>Existem <span class="badge">{{lista_solicitante.count}}</span> chamados abertos</p> <br>
+        
+            <table class="table is-bordered">
+            <thead>
+                <tr>
+                    <th>Chamado</th>
+                    <th>Nao Conformidade</th>
+                    <th>Data de Abertura</th>
+                    <th>Data sua ultima alteração</th>
+                    <th>Validar</th>
+                </tr>
+            </thead>
+            <tbody>
+		{% for chamado in lista_solicitante %}
+        {% if chamado.fase == "Validação do Gestor" %}
+                <tr>
+                    <td>{{chamado.codigo}}</td>
+                    <td>{{chamado.tipo.nome}}</td>
+                    <td>{{chamado.data_criacao}}</td>                   
+                    <td>{{chamado.interacao.data_interacao}}</td>
+                    <td><a href="{% url url_historico chamado.codigo %}">Sim</a>        <a href="">Não</a> </td>
+                </tr>
+            </tbody>
+            </table>
+		{% else %}
+		        <h2>Não há nenhum chamado em validação do gestor</h2>
+        {% endif %}
+		{% endfor %}
+
+
+	<hr>
+{% endif %}
+{% if lista_executante %}
+	<ul>
+		<p>Você tem {{lista_executante.count}}	chamados como executante</p>
+	{% for chamado in lista_executante %}
+		<li><a href="{% url url_historico chamado.codigo %}">Chamado de n° {{chamado.codigo}}</a>
+	{% endfor %}
+	</ul>
+	<hr/>
+{% endif %}
+<input type="button" id="botao_estado" class="btn btn-info" onclick="alterarEstado()" value="Exibir chamados fechados" />
+<div class="escondido" id="chamados">
+	{% if lista_solicitante_fechado %}
+		<ul>
+			<p>Você tem {{lista_solicitante_fechado.count}} chamados como fechados</p>
+		{% for chamado in lista_solicitante_fechado %}
+			<li><a href="{% url url_historico chamado.codigo%}"> Chamado de nº {{chamado.codigo}} </a>
+		{% endfor %}
+		</ul>
+		<hr />
+	{% endif %}
+
+	{% if lista_executante_fechado %}
+		<ul>
+			<p>Você tem {{lista_executante_fechado.count}} chamados como executante fechados</p>
+		{% for chamado in lista_executante_fechado %}
+			<li><a href="{% url url_historico chamado.codigo %}"> Chamado de nº {{chamado.codigo}} </a>
+		{% endfor %}
+		</ul>
+	{% endif %}
+</div>
+<script type="text/javascript">
+	function alterarEstado(){
+		$('#chamados').removeClass('escondido');
+		$('#botao_estado').addClass('escondido');
+	}
+</script>
+{% endblock body %}}

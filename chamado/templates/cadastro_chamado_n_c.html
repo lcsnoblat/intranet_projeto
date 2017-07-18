@@ -1,0 +1,66 @@
+{% extends "base_chamado.html" %}
+{% block chamado_menu%}
+	<li><a href="{% url url_model %}">Abrir Chamado</a></li>
+	<li><a href="{% url url_listar %}">Listar Chamados</a></li>
+	{% if usuario.groups.first.name == "Gestor" %}
+	<li><a href="{% url url_area_gestor %}">Área do Gestor</a></li>
+	{% endif %}
+{% endblock chamado_menu%}
+{% block body %}
+	{% if erro %}
+      <div class="alert alert-danger">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+              &times;
+          </button>
+          {{erro}}
+      </div>
+     {%elif msg %}
+      <div class="alert alert-success">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+              &times;
+          </button>
+          {{msg}}
+      </div>
+     {% endif %}
+	<form role="form" action="{% url url_model %}" enctype="multipart/form-data" method="POST" class="form-group">
+		{% csrf_token %}
+		<div class="form-group">
+			<label for="tipo">Tipos de Chamado</label>
+			<select id="tipo" name="tipo" class="form-control">
+				{% for tipo in tipos_chamados %}
+					<option value="{{tipo.id}}"> Nome: {{tipo.nome}}, Criticidade: {{tipo.criticidade}}, Tempo sobrando: {{ tipo.tempo_de_duracao }}</option>
+				{% endfor %}
+			</select>
+
+		</div>
+		<div class="form-group">
+			<label for="produto">Produtos</label>
+			<select id="produto" name="produto" class="form-control">
+				{% for produto in produto %}
+					<option value="{{produto.id}}"> Nome: {{ produto.nome }}, Id: {{ produto.id }}</option> <br>
+				{% endfor %}
+			</select>
+			<br>
+			<label for="lote">Lote</label>
+			<select id="lote" name="lote" class="form-control">
+				{% for lote in lote %}
+					<option value="{{lote.id}}"> Lote: {{ lote.nome }}</option> <br>
+				{% endfor %}
+			</select>
+
+		</div>
+		<div class="form-group">
+			<label for="descricao">Faça uma descrição do chamado:</label>
+				<textarea id="descricao" name="descricao" cols=70 rows=10 class="form-control" required></textarea>
+		</div>
+
+		<div class="form-group">
+			<label for="arquivo">Faça upload de uma foto</label>
+				<input type="file" name="arquivo" id="arquivo">
+		</div>
+
+		</div>
+		<button type="submit" class="save btn btn-default">Salvar</button>
+	</form>
+
+{% endblock body %}

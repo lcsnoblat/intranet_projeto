@@ -1,0 +1,64 @@
+{% extends "base_chamado.html" %}
+{% block chamado_menu%}
+	<li><a href="{% url 'cadastro_chamado_mkt' %}">Abrir Chamado</a></li>
+	<li><a href="{% url url_listar %}">Listar Chamados</a></li>
+{% endblock chamado_menu%}
+{% block body %}
+	{% if erro %}
+      <div class="alert alert-danger">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+              &times;
+          </button>
+          {{erro}}
+      </div>
+     {%elif msg %}
+      <div class="alert alert-success">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+              &times;
+          </button>
+          {{msg}}
+      </div>
+     {% endif %}
+	<form role="form" action="{% url url_model %}" method="POST" class="form-group">
+		{% csrf_token %}
+		<div class="form-group">
+			<label for="tipo">Tipos de Arte</label>
+			<select id="tipo" name="tipo" class="form-control">
+				{% for tipo in tipos_chamados %}
+					<option value="{{tipo.id}}">{{tipo.nome}}</option>
+				{% endfor %}
+			</select>
+		</div>
+		<div class="form-group">
+			<label for="foco">Diga o Foco:</label>
+				<textarea id="foco" name="foco" cols=70 rows=10 class="form-control" required></textarea>
+		</div>
+		
+		<div class="form=group">
+			<label for="uf"> Qual a sua UF? </label>
+			<input type="text" id="uf" name="uf" maxlength="2" class="form-control" placeholder="Ex: RJ" required>
+		</div>
+		
+		<div class="form=group">
+			<label for="telefone"> Qual o seu telefone? </label>
+			<input type="text" id="telefone" name="telefone" maxlength="11" class="form-control" required>
+		</div>
+		<div class="form=group">
+			<label for="formato"> Qual o formato desejado? </label>
+			<input type="text" id="formato" name="formato" maxlength="10" class="form-control" placeholder="Ex:.jpg" required>
+		</div>   
+		
+		<div class="form=group">
+			<label for="tamanho"> Qual o tamanho desejado? </label>
+			<input type="text" id="tamanho" name="tamanho" maxlength="10" class="form-control" placeholder="Ex: altura X largura" required>
+		</div>   
+
+		<div class="form=group">
+			<label for="data_prevista"> Qual a data prevista para entrega? </label>
+			<input type="date" id="data_prevista" name="data_prevista" maxlength="10" class="form-control" required>
+		</div>  
+
+		<button type="submit" class="save btn btn-default">Salvar</button>
+	</form>
+
+{% endblock body %}

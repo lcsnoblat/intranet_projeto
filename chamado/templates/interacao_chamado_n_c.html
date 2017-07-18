@@ -1,0 +1,117 @@
+{% extends "base_chamado.html" %}
+{% block chamado_menu%}
+	<li><a href="{% url url_cadastro %}">Abrir Chamado</a></li>
+	<li><a href="{% url url_listar %}">Listar Chamados</a></li>
+{% endblock chamado_menu%}
+{% block body %}
+	{%if erro %}
+	<div class="alert alert-danger">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+              &times;
+          </button>
+		{{erro}}
+	</div>
+     {%elif msg %}
+      <div class="alert alert-success">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+              &times;
+          </button>
+          {{msg}}
+      </div>
+     {% endif %}
+
+	<div class="page-header">
+		<h1>{{chamado.fase}}</h1>
+		<hr>
+		<p><strong>Tipo do problema: </strong>{{ chamado.tipo }}</p>
+		<p><strong>Fotos: </strong><a href="{{ chamado.arquivo.url }}">{{ chamado.arquivo }}</a></p>
+		    {% if chamado.fase == "Análise de Procedência" %}
+			<p><strong>Descrição:</strong> {{ chamado.descricao }} </p>
+
+			{% elif chamado.fase == "Análise de Causa-Raiz" %}
+		    <p><strong>Fase: </strong>Análise de Causa-Raiz</p>
+			<p><strong>Descrição:</strong> {{ chamado.descricao }} </p>
+
+		    {% elif chamado.fase == "Tratamento Preliminar" %}
+			<p><strong>Descrição Análise de Causa-Raiz:</strong> {{ chamado.descricao_causa_raiz }} </p>
+
+		    {% elif chamado.fase == "Tratamento Definitivo" %}
+			<p><strong>Descrição Análise de Causa-Raiz:</strong> {{ chamado.descricao_causa_raiz }} </p>
+			<p><strong>Descrição Tratamento Preliminar</strong> {{ chamado.descricao_tratamento_preliminar }} </p>
+
+			{% elif chamado.fase == "Validação do Gestor" %}
+			<p><strong>Descrição Análise de Causa-Raiz:</strong> {{ chamado.descricao_causa_raiz }} </p>
+			<p><strong>Descrição Tratamento Preliminar</strong> {{ chamado.descricao_tratamento_preliminar }} </p>
+			<p><strong>Descrição Tratamento Definitivo</strong> {{ chamado.descricao_tratamento_definitivo }} </p>
+		    {% endif %}
+	</div>
+	<form role="form" action="{% url url_model chamado_id %}" method="POST">
+	{% csrf_token %}
+		{% if chamado.fase == "Análise de Causa-Raiz" and chamado.resolvido = False %}
+		<div class="form-group">
+			<label>Justificativa: {{chamado.fase}}:</label>
+			<textarea id="descricao_causa_raiz" name="descricao_causa_raiz" rows="10" cols="70" class="form-control" required>
+			</textarea>
+		</div>
+		{% endif %}
+
+		{% if chamado.fase == "Tratamento Preliminar" and chamado.resolvido = False %}
+		<div class="form-group">
+			<label>Justificativa: {{chamado.fase}}:</label>
+			<textarea id="descricao_tratamento_preliminar" name="descricao_tratamento_preliminar" rows="10" cols="70" class="form-control" required>
+			</textarea>
+		</div>
+		{% endif %}
+
+		{% if chamado.fase == "Tratamento Definitivo" and chamado.resolvido = False %}
+		<div class="form-group">
+			<label>Justificativa: {{chamado.fase}}:</label>
+			<textarea id="descricao_tratamento_definitivo" name="descricao_tratamento_definitivo" rows="10" cols="70" class="form-control" required>
+			</textarea>
+		</div>
+		{% endif %}
+		
+		{% if chamado.fase == "Validação do Gestor" and chamado.resolvido = True %}
+
+		{% elif chamado.fase == "Validação do Gestor" and chamado.resolvido = False %}
+		<div class="form-group">
+			<label for="procede">A reclamação procede?</label>
+			<select id="procede" name="procede" class="form-control">
+					<option value="1"> Sim</option>
+					<option value="0"> Não</option>
+			</select>
+		</div>
+		{% endif %}
+
+				
+
+		{% if chamado.fase == "Validação do Gestor" and chamado.resolvido = False%}
+		<br><br>
+		<h4>Aguardando validação do Gestor</h4>
+			{% if chamado.usuario_solicitante.groups.first.name == "Gestor" %}
+				<div class="form-group">
+							<label>Fechar chamado:</label>
+							<input type="checkbox" name="resolvido" id="resolvido" value="False">
+				</div>
+				<button type="submit" class="save btn btn-default">Validar</button>
+				<hr/>
+			{% else %}
+				<p>Somente um gestor pode validar chamados.</p>
+
+			{% endif %}
+		{% else %}
+		<button type="submit" class="save btn btn-default">Salvar</button>
+		<hr/>
+		{% endif %}
+
+		{% if form.errors %}
+        <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                &times;
+            </button>
+            {{form.non_field_errors}}
+            {{form.errors}}
+        </div>
+    {% endif %}
+	</form>
+{% endblock body%}
