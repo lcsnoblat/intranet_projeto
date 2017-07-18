@@ -1,0 +1,2 @@
+Necessário ter o postgreSQL instalado, após instalar o postgresql criar o banco de dados intranet e o usuário sistema com  a senha 123 e conceder todo o acesso a esse banco para o usuário sistema.
+Programa rodando em python3 e Django 1.9
