@@ -1,0 +1,33 @@
+{% extends "base_dphelp.html" %}
+{% block body %}
+	<form role="form" action="{% url "interar_dphelp" chamado_id%}" method="POST">
+	{% csrf_token %}
+		<div class="form-group">
+			<label>Descrição:</label>
+			<textarea id="descricao" name="descricao" rows="10" cols="70" class="form-control">			
+			</textarea>
+		</div>
+		{% if chamado.resolvido %}
+
+		{% else %}
+			<div class="form-group">
+				<label>Fechar chamado:</label>
+				<input type="checkbox" name="resolvido" id="resolvido" value="False">
+			</div>
+		{% endif %}
+
+		
+		<button type="submit" class="save btn btn-default">Salvar</button>
+		<hr/>
+
+		{% if form.errors %}
+        <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                &times;
+            </button>
+            {{form.non_field_errors}}
+            {{form.errors}}
+        </div>
+    {% endif %}
+	</form>
+{% endblock body%}

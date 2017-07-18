@@ -1,0 +1,35 @@
+{% extends "base_loja.html" %}
+{% block pedido %}
+{% if usuario in pedido.processo.usuarios.all %}
+<form role="form" action="{% url 'historico_pedido' pedido.numero %}" method="POST" class="form-group">
+  {% csrf_token %}
+  <div class="form-group">
+    <label for="estado">Estado</label>
+    <select id="estado" name="estado" class="form-control" onchange="this.form.submit()">
+      {% for estado in pedido.ESTADO_PEDIDO  %}
+        <option value="{{estado.0}}">{{estado.1}}</option>
+      {% endfor %}
+    </select>
+  </div>
+</form>
+{% endif %}
+<h2>Solicitação n°: {{pedido.numero}}</h2>
+<p> Data Solicitação: {{pedido.data_abertura}} </p>
+{% if usuario in pedido.processo.usuarios.all %}
+<p>Nome do solicitante: {{pedido.solicitante.get_full_name}}
+<p>Usuário do solicitante: {{pedido.solicitante.username}}
+{% endif %}
+<p>Estado: {{pedido.estado}} </p>
+<p>Valor total: R$ {{pedido.valor}} </p>
+<table>
+  <tr>
+    <th>Produto</th>
+    <th>Quantidade</th>
+  </tr>
+{% for produto in pedido.produtos.all %}
+  <tr>
+    <td>{{produto.produto.linha}} - {{produto.produto.nome}}</td>
+    <td>{{produto.quantidade}}</td>
+  </tr>
+{% endfor %}
+{% endblock pedido %}

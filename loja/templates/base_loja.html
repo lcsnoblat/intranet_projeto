@@ -1,0 +1,20 @@
+{% extends "init.html" %}
+{% load staticfiles %}
+{% block corpo %}
+  <div class="col-md-4">
+      <nav class="sidebar-nav well">
+        <ul class="nav nav-list">
+          {% block menu_loja %}
+          <li><a href="{% url 'cadastrar_pedido' %}">Cadastrar pedido</a></li>
+          <li><a href="{% url 'listar_pedidos' %}">Listar pedidos</a></li>
+          {% endblock menu_loja %}
+        </ul>
+      </nav>
+  </div>
+  <div class="col-md-8">
+    <div class="container-fluid">
+      {% block pedido%}
+      {% endblock pedido%}
+    </div>
+  </div>
+{% endblock corpo %}

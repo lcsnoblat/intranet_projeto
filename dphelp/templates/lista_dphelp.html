@@ -1,0 +1,49 @@
+{% extends "base_dphelp.html" %}
+{% block body %}
+{% if lista_solicitante %}
+	<ul>
+		<p>Você tem {{lista_solicitante.count}}	chamados abertos</p>
+	{% for chamado in lista_solicitante %}
+		<li><a href="{% url 'historico_dphelp' chamado.id %}">Chamado de n° {{chamado.id}}</a>
+	{% endfor %}	
+	</ul>
+	<hr>
+{% endif %}
+{% if lista_executante %}
+	<ul>
+		<p>Você tem {{lista_executante.count}}	chamados como executante</p>
+	{% for chamado in lista_executante %}
+		<li><a href="{% url 'historico_dphelp' chamado.id %}">Chamado de n° {{chamado.id}}</a>
+	{% endfor %}	
+	</ul>
+	<hr/>
+{% endif %}
+<input type="button" id="botao_estado" class="btn btn-info" onclick="alterarEstado()" value="Exibir chamados fechados" />
+<div class="escondido" id="chamados">
+	{% if lista_solicitante_fechado %}
+		<ul>
+			<p>Você tem {{lista_solicitante_fechado.count}} chamados como fechados</p>
+		{% for chamado in lista_solicitante_fechado %}
+			<li><a href="{% url 'historico_dphelp' chamado.id%}"> Chamado de nº {{chamado.id}} </a>
+		{% endfor %}
+		</ul>
+		<hr />
+	{% endif %}
+
+	{% if lista_executante_fechado %}
+		<ul>
+			<p>Você tem {{lista_executante_fechado.count}} chamados como executante fechados</p>
+		{% for chamado in lista_executante_fechado %}
+			<li><a href="{% url 'historico_dphelp' chamado.id%}"> Chamado de nº {{chamado.id}} </a>
+		{% endfor %}
+		</ul>
+	{% endif %}
+</div>
+<script type="text/javascript">
+	function alterarEstado(){
+		$('#chamados').removeClass('escondido');
+		$('#botao_estado').addClass('escondido');
+	}
+</script>
+{% endblock body %}}
+

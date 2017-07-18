@@ -1,0 +1,15 @@
+{% extends "base_loja.html" %}
+{% block pedido %}
+{% if pedidos.count > 0 %}
+  <p>Você tem {{pedidos.count}} solicitações como solicitante</p>
+{% endif %}
+{% for pedido in pedidos %}
+  <li><a href="{% url 'historico_pedido' pedido.numero %}">Pedido: {{pedido.numero}}</a></li>
+{% endfor %}
+{% if pedidos_admin.count > 0 %}
+  <p>Você tem {{pedidos_admin.count}} solicitações como executor</p>
+{% endif %}
+{% for pedido in pedidos_admin  %}
+  <li><a href="{% url 'historico_pedido' pedido.numero %}">Pedido: {{pedido.numero}}</a></li>
+{% endfor %}
+{% endblock pedido %}

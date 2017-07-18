@@ -1,0 +1,25 @@
+{% extends "base_dphelp.html" %}
+{% block body %}
+	<h1>Chamado n° {{chamado.id}}</h2>
+	<p><strong>Tipo: </strong>{{chamado.tipo.nome}}</p>
+	<p> <strong>Descrição:</strong> {{chamado.descricao}}</p>
+	<p> <strong>Data de criação:</strong> {{chamado.data_criacao}}</p>
+	<p> <strong>Usuário: </strong> {{chamado.usuario_solicitante.username}}
+	{% if chamado.resolvido == True %}
+	<p> <strong>Status:</strong> Resolvido</p>
+	{% else %}
+	<p> <strong>Status:</strong> Aberto</p>
+	{% endif %}
+{% if lista %}
+	<hr/>
+	{% if lista %}
+		{% for interacao in lista %}
+			<p>Usuário: {{interacao.usuario.username}} </p>
+			<p>Texto: {{interacao.descricao}} </p>
+			<p>Data: {{interacao.data_interacao}} </p>
+			<hr/>
+		{% endfor %}
+	{% endif %}
+{% endif %}
+<a class="btn  botao-laranja letra-cor" href="{% url 'interar_dphelp' chamado.id %}">Faça uma interacao</a>
+{% endblock body %}}

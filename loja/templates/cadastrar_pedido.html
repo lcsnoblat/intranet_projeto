@@ -1,0 +1,59 @@
+{% extends "base_loja.html" %}
+{% block pedido %}
+
+{% if linha.count > 0 %}
+<p> "Olá, seja bem bem-vindo(a) a loja interna da Yenzah. Aqui, nossos produtos possuem desconto de 50% para nossos colaboradores!<br />
+A cada mês, você pode solicitar ATÉ 5 produtos de seu interesse. Clique na quantidade desejada e efetue seu pedido. Retornaremos o contato assim que possível com o valor total da sua compra e a data de entrega. <br />
+
+Aguarde, por gentileza. <br />
+
+Obrigada e boas compras!" <br />
+
+  {% if erro %}
+      <div class="alert alert-danger">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+              &times;
+          </button>
+          {{erro}}
+      </div>
+     {%elif msg %}
+      <div class="alert alert-success">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+              &times;
+          </button>
+          {{msg}}
+      </div>
+  {% endif %}
+
+<form role="form" action="{% url 'cadastrar_pedido' %}" method="POST" class="form-group">
+  {% csrf_token %}
+  {% for lin in linha %}
+    <button type=button class="accordion">{{lin.nome}}</button>
+       <div class="linha" style="background-color: #ffffff">
+         {% for produto in lin.produtos.all %}
+           <div class="form-group">
+                <label for="{{produto.id}}">{{produto.nome}} - R$ {{produto.preco}}</label>
+                <input type="number" name="{{produto.id}}" class="form-control quantidade" value="" min="0" max="5"/>
+           </div>
+       {% endfor %}
+     </div>
+  {% endfor %}
+<button type="submit" class="save btn btn-default btn-block">Salvar</button>
+</form>
+{% else %}
+<p>Não temos nenhum produto disponível no momento. :( </p>
+{% endif %}
+<script type="text/javascript">
+  $(document).ready(function() {
+    var acc = document.getElementsByClassName("accordion");
+    var i;
+    for (i = 0; i < acc.length; i++) {
+      acc[i].onclick = function(){
+          this.classList.toggle("active");
+          this.nextElementSibling.classList.toggle("show");
+      }
+  }
+  });
+
+</script>
+{% endblock pedido %}
